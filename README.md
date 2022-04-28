@@ -29,11 +29,11 @@ php artisan serve
 ```
 # Public
 
-GET    /api/produto   (Listas todas as produtos)
-POST   /api/produto   (Cria uma produto)
-POST   /api/produto/show  (Mostra uma produto)
-POST   /api/produto/update    (Atualiza dados da produto)
-POST   /api/produto/delete    (Deleta uma produto)
+GET    /api/produto   (Listas todas os produtos)
+POST   /api/produto   (Cria um produto)
+POST   /api/produto/show  (Mostra um produto)
+POST   /api/produto/update    (Atualiza dados do produto)
+POST   /api/produto/delete    (Deleta um produto)
 
 
 GET    /api/marca   (Listas todas as marcas)
