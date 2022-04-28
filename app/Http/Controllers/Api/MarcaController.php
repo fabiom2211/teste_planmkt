@@ -116,20 +116,33 @@ class MarcaController extends Controller
 
     public function destroy(Request $request)
     {
-        $marca = Marca::where('uuid', $request->uuid)->firstOrFail();
-        if ($marca) {
-            $marca->delete();
+
+        $request->validate([
+            'uuid' => ['required', 'uuid', 'exists:marcas,uuid'],
+        ]);
+
+        try {
+            $marca = Marca::where('uuid', $request->uuid)->firstOrFail();
+            if ($marca) {
+                $marca->delete();
+            }
+        } catch (Exception $exception) {
+            return $this->error(
+                "An Error has ocurred",
+                $exception->getCode(),
+                [
+                    'exception_type' => gettype($exception),
+                    'exception_message' => $exception->getMessage(),
+                    'exception_trace' => $exception->getTraceAsString(),
+                ]
+            );
         }
-        return $marca;
+        return $this->success([
+            'marca' => $marca
+        ]);
     }
 
 
-    public function restore(string $uuid)
-    {
-        $collection = Marca::withTrashed()->where('uuid', $uuid)->firstOrFail();
-        $collection->restore();
-        return $collection;
-    }
 }
 
 

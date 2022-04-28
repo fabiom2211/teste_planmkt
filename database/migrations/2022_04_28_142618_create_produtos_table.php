@@ -18,9 +18,8 @@ class CreateProdutosTable extends Migration
             $table->uuid("uuid")->unique();
             $table->foreignId("marca_id");
             $table->string('nome')->nullable();
-            $table->string('descrição');
+            $table->string('descricao');
             $table->enum("tensao", ["220v","110v"])->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }

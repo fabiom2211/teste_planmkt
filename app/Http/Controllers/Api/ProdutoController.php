@@ -37,11 +37,12 @@ class ProdutoController extends Controller
         $request->validate([
             'nome' => ['required', 'string', 'min:5', 'max:254'],
             'descricao' => ['string', 'max:254'],
-            'marca_id' => ['required', 'marca_id', 'exists:marcas,id']
+            'marca_id' => ['required', 'integer', 'exists:marcas,id'],
+            'tensao' => ['required'],
         ]);
 
         try {
-            $produto = Produtos::create(['nome' => $request->nome]);
+            $produto = Produtos::create($request->all());
         } catch (Exception $exception) {
             return $this->error(
                 "An Error has ocurred",
@@ -90,13 +91,19 @@ class ProdutoController extends Controller
 
         $request->validate([
             'uuid' => ['required', 'uuid', 'exists:produtos,uuid'],
-            'nome' => ['required', 'string', 'min:5', 'max:254']
+            'nome' => ['required', 'string', 'min:5', 'max:254'],
+            'descricao' => ['string', 'max:254'],
+            'marca_id' => ['required', 'integer', 'exists:marcas,id'],
+            'tensao' => ['required']
         ]);
 
         try {
             $produto = Produtos::where('uuid', $request->uuid)->firstOrFail();
             if ($produto) {
                 $produto->nome = $request->nome;
+                $produto->descricao = $request->descricao;
+                $produto->marca_id = $request->marca_id;
+                $produto->tensao = $request->tensao;
                 $produto->save();
             }
         } catch (Exception $exception) {
@@ -118,18 +125,33 @@ class ProdutoController extends Controller
 
     public function destroy(Request $request)
     {
-        $produto = Produtos::where('uuid', $request->uuid)->firstOrFail();
-        if ($produto) {
-            $produto->delete();
+        $request->validate([
+            'uuid' => ['required', 'uuid', 'exists:produtos,uuid'],
+        ]);
+
+        try {
+            $produto = Produtos::where('uuid', $request->uuid)->firstOrFail();
+            if ($produto) {
+                $produto->delete();
+            }
+        } catch (Exception $exception) {
+            return $this->error(
+                "An Error has ocurred",
+                $exception->getCode(),
+                [
+                    'exception_type' => gettype($exception),
+                    'exception_message' => $exception->getMessage(),
+                    'exception_trace' => $exception->getTraceAsString(),
+                ]
+            );
         }
-        return $produto;
+        return $this->success([
+            'produto' => $produto
+        ]);
+
+
     }
 
 
-    public function restore(string $uuid)
-    {
-        $collection = Produtos::withTrashed()->where('uuid', $uuid)->firstOrFail();
-        $collection->restore();
-        return $collection;
-    }
+
 }

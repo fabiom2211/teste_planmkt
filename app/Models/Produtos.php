@@ -9,4 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class Produtos extends Model
 {
     use HasFactory, HasUUID;
+
+    protected $fillable = [
+        'nome',
+        'descricao',
+        'marca_id',
+        'tensao'
+    ];
 }
