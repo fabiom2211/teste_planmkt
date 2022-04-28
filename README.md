@@ -5,14 +5,14 @@
 
 Copie e cole o seu *.env.example* renomeando para *.env* e adiciona informações do seu Banco de Dados
 
-For SQLite, add
+For MySQL, add
 ```
 DB_CONNECTION=mysql
 DB_HOST=172.18.0.2
 DB_PORT=3306
 DB_DATABASE=planmkt
 DB_USERNAME=root
-DB_PASSWORD=impa123
+DB_PASSWORD=xxxx
 ```
 
 Rode os seguintes comando na raiz do projeto:
