@@ -24,12 +24,8 @@ php artisan serve
 ```
 
 ## Rotas
-Route::get('/', [MarcaController::class, 'index']);
-Route::post('/', [MarcaController::class, 'store']);
-Route::post('/show', [MarcaController::class, 'show']);
-Route::post('/update', [MarcaController::class, 'update']);
-Route::post('/delete', [MarcaController::class, 'destroy']);
-Route::post('/restore', [MarcaController::class, 'restore']);
+
+
 ```
 # Public
 
